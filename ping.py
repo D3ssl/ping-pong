@@ -2,10 +2,10 @@ from pygame import *
 font.init()
 w = 700
 h = 500
-font1 = font.Font(None,30)
+font1 = font.SysFont("Arial",30)
 
-lose1 = font1.render("Player 1 lose",1,(255,255,255))
-lose2 = font1.render("Player 2 lose",1,(255,255,255))
+lose1 = font1.render("Player 1 lose",True,(255,0,0))
+lose2 = font1.render("Player 2 lose",True,(255,0,0))
 
 
 
@@ -49,8 +49,8 @@ class Player(GameSprite):
 clock = time.Clock()
 FPS = 60
 
-speed_x = 3
-speed_y = 3
+speed_x = 5
+speed_y = 5
 
 game = True
 finish = False
@@ -81,9 +81,17 @@ while game:
         if ball.rect.y > h-65 or ball.rect.y < 0:
             speed_y *= -1
      
-        
         if sprite.collide_rect(rocket1,ball) or sprite.collide_rect(rocket2,ball):
             speed_x *= -1
+        
+        if ball.rect.x < 0:
+            finish = True
+            window.blit(lose1,(300,250))
+
+
+        if ball.rect.x > w-2:
+            finish = True
+            window.blit(lose2,(300,250))
             
         
         
